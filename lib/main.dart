@@ -72,8 +72,6 @@ class AppBody extends StatelessWidget {
       decoration: mainBackgroundDecoration,
       child: Center(
         child: Container(
-          width: 300,
-          height: 200,
           child: CarouselWithState(),
         ),
       ),

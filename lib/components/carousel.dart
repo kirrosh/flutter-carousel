@@ -58,15 +58,23 @@ class _CarouselWithStateState extends State<CarouselWithState> {
             ),
           ],
         )),
-        PageView.custom(
-          scrollDirection: Axis.horizontal,
-          controller: controller,
-          physics: AlwaysScrollableScrollPhysics(),
-          childrenDelegate: SliverChildBuilderDelegate(
-            (context, index) {
-              return FakeCard();
-            },
-            childCount: 3,
+        Center(
+          child: Container(
+            height: 250,
+            child: PageView.custom(
+              scrollDirection: Axis.horizontal,
+              controller: controller,
+              physics: AlwaysScrollableScrollPhysics(),
+              childrenDelegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  if (selectedPage == index) {
+                    return StyledCard();
+                  }
+                  return Container();
+                },
+                childCount: 3,
+              ),
+            ),
           ),
         ),
       ],
@@ -74,24 +82,13 @@ class _CarouselWithStateState extends State<CarouselWithState> {
   }
 }
 
-class FakeCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 100,
-//      decoration:
-//          BoxDecoration(border: Border.all(color: Colors.red, width: 4)),
-    );
-  }
-}
-
 class TransformController {
   calculateTransform(double offset, int pageId) {
     double translationOffset = (pageId - offset) * 48;
     double scale = 1 - (pageId - offset) * 0.2;
+
     if (pageId - offset < 0) {
-      translationOffset = (pageId - offset) * 500;
+      translationOffset = (pageId - offset) * 250;
     }
     return Matrix4.identity()
       ..scale(scale)
